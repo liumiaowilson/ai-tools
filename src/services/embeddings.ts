@@ -15,8 +15,17 @@ function getExtractor() {
   return extractorPromise;
 }
 
+const BATCH_SIZE = 20;
+
 export async function embed(texts: string[]): Promise<number[][]> {
   const extractor = await getExtractor();
-  const output = await extractor(texts, { pooling: 'mean', normalize: true });
-  return output.tolist();
+  const results: number[][] = [];
+
+  for (let i = 0; i < texts.length; i += BATCH_SIZE) {
+    const batch = texts.slice(i, i + BATCH_SIZE);
+    const output = await extractor(batch, { pooling: 'mean', normalize: true });
+    results.push(...output.tolist());
+  }
+
+  return results;
 }

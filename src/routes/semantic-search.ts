@@ -26,6 +26,10 @@ router.post('/semantic-search', async (req: Request, res: Response) => {
     res.status(400).json({ error: 'limit must be a positive integer' });
     return;
   }
+  if (items.length > 200) {
+    res.status(400).json({ error: 'items array must not exceed 200 elements' });
+    return;
+  }
 
   const effectiveLimit = Math.min(limit, items.length);
 
