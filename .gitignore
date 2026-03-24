@@ -1,2 +1,4 @@
 node_modules/
 dist/
+ai-tools.pid
+ai-tools.log
