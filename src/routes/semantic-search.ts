@@ -42,9 +42,9 @@ router.post('/semantic-search', async (req: Request, res: Response) => {
 
     // Sort by descending similarity and take top N
     scored.sort((a, b) => b.score - a.score);
-    const topIndexes = scored.slice(0, effectiveLimit).map(s => s.index);
+    const topResults = scored.slice(0, effectiveLimit).map(({ index, score }) => ({ index, score }));
 
-    res.json(topIndexes);
+    res.json(topResults);
   } catch (err) {
     console.error('Semantic search error:', err);
     res.status(500).json({ error: 'Internal server error' });
