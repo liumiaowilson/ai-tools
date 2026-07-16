@@ -3,7 +3,9 @@ import { embed } from '../services/embeddings.js';
 
 const router = Router();
 
-const MAX_TEXT_CHARS = 200_000;
+// ~63 chunks at 800 chars each; keeps a single request well under the Apex
+// caller's 2-minute timeout on the 1GB compute box.
+const MAX_TEXT_CHARS = 50_000;
 
 interface EmbeddingBody {
   text: string;

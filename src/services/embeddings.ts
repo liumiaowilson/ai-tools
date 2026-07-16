@@ -15,7 +15,9 @@ function getExtractor() {
   return extractorPromise;
 }
 
-const BATCH_SIZE = 20;
+// Peak inference RSS scales with batch size × padded sequence length; 20 × 512-token
+// chunks spikes ~360MB over baseline and OOMs the 1GB compute box. 4 stays ~330MB total.
+const BATCH_SIZE = 4;
 const CHUNK_CHARS = 800;
 
 function chunk(text: string): string[] {
